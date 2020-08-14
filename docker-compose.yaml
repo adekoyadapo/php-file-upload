@@ -1,0 +1,23 @@
+version: '3.7'
+
+# Services
+services:
+
+  # Nginx Service
+  nginx:
+    image: nginx:1.17
+    ports:
+      - 9000:80
+    volumes:
+      - ./src:/var/www/php:ro
+      - ./.docker/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - php
+
+  # PHP Service
+  php:
+    image: php:7.4-fpm
+    working_dir: /var/www/php
+    volumes:
+      - ./src:/var/www/php
+        #      - ./uploads:/tmp
